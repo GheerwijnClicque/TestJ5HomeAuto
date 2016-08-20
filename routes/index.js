@@ -59,6 +59,7 @@ router.get('/', function(req, res, next) {
 router.get('/relay/:id', function(req, res) {
     var pin = req.params.id;
     toggle(pin);
+    res.send(200);
 });
 
 router.get('/test', function(req, res) {
