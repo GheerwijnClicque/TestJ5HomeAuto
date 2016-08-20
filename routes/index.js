@@ -77,6 +77,7 @@ var toggle = function(id) {
 };
 
 router.get('/devices', function(req, res) {
+    var initialized = false;
     console.log('taking a looong time...');
     io.once('ready', function(){
         console.log('IO Ready');
@@ -98,18 +99,20 @@ router.get('/devices', function(req, res) {
                         new five.Relay({pin: 10, id: 10}),
                         new five.Relay({pin: 11, id: 11}),
                     ];
+
+            initialized = true;
             // this.repl.inject({
             //     relay: r3
             //   });
-            res.send(200);
+            // res.send(200);
         });
     });
-    
+
     db.serialize(function() {
         var data;
 		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
 			data = row;
-            res.send(JSON.stringify(data));
+            if(initialized) res.send(JSON.stringify(data));
             console.log(data);
 		});
 	});
