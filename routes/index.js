@@ -51,7 +51,6 @@ router.get('/', function(req, res, next) {
             // this.repl.inject({
             //     relay: r3
             //   });
-            res.send(200);
         });
     });
     res.render('index', { title: 'Express'});
@@ -77,42 +76,11 @@ var toggle = function(id) {
 };
 
 router.get('/devices', function(req, res) {
-    var initialized = false;
-    console.log('taking a looong time...');
-    io.once('ready', function(){
-        console.log('IO Ready');
-        io.isReady = true;
-
-        var board = new five.Board({io: io, repl: true});
-
-        board.on('ready', function(){
-            console.log('five ready');
-
-            relays = [  new five.Relay({pin: 2, id: 2}),
-                        new five.Relay({pin: 3, id: 3}),
-                        new five.Relay({pin: 4, id: 4}),
-                        new five.Relay({pin: 5, id: 5}),
-                        new five.Relay({pin: 6, id: 6}),
-                        new five.Relay({pin: 7, id: 7}),
-                        new five.Relay({pin: 8, id: 8}),
-                        new five.Relay({pin: 9, id: 9}),
-                        new five.Relay({pin: 10, id: 10}),
-                        new five.Relay({pin: 11, id: 11}),
-                    ];
-
-            initialized = true;
-            // this.repl.inject({
-            //     relay: r3
-            //   });
-            // res.send(200);
-        });
-    });
-
     db.serialize(function() {
         var data;
 		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
 			data = row;
-            if(initialized) res.send(JSON.stringify(data));
+            res.send(JSON.stringify(data));
             console.log(data);
 		});
 	});
