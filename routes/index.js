@@ -66,7 +66,7 @@ router.get('/', function(req, res, next) {
 router.get('/relay/:id', function(req, res) {
     var pin = req.params.id;
     toggle(pin);
-    res.send(200);
+    res.sendStatus(200);
 });
 
 router.get('/test', function(req, res) {
@@ -132,7 +132,7 @@ router.post('/addDevice', function(req, res) {
 
     db.serialize(function() {
         db.run("INSERT INTO DEVICES (location_id, name, pin, component) VALUES ($location, $name, $pin, $component)", {$name: name, $location: location, $pin: pin, $component: component}, function() {
-            res.send(200);
+            res.sendStatus(200);
         });
     });
 });
@@ -140,7 +140,7 @@ router.post('/addDevice', function(req, res) {
 router.post('/deleteDevice', function(req, res) {
     db.run("DELETE FROM DEVICES WHERE deviceid = $id", {$id: req.body.id}, function(error, row) {
         console.log(this.changes);
-        res.send(200);
+        res.sendStatus(200);
     });
 });
 
