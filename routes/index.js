@@ -108,14 +108,17 @@ router.get('/devices', function(req, res) {
 
     }
 
-    db.serialize(function() {
-        var data;
-		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
-			data = row;
-            res.send(JSON.stringify(data));
-            console.log(data);
-		});
-	});
+    if(initialized) {
+        db.serialize(function() {
+            var data;
+    		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
+    			data = row;
+                res.send(JSON.stringify(data));
+                console.log(data);
+    		});
+    	});
+    }
+
 });
 
 router.get('/locations', function(req, res) {
