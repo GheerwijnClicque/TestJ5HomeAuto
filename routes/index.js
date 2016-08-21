@@ -56,12 +56,12 @@ router.get('/', function(req, res, next) {
                 //   });
                 initialized = true;
                 console.log('initialized');
-                res.sendStatus(200);
+                // res.sendStatus(200);
             });
         });
     }
 
-    // res.render('index', { title: 'Express'});
+    res.render('index', { title: 'Express'});
 });
 
 router.get('/relay/:id', function(req, res) {
