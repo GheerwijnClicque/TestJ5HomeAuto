@@ -67,6 +67,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/refresh', function(req, res) {
     if(!initialized) {
+        console.log('io: ');
+        console.log(io);
         console.log('initializing...');
         io.once('ready', function(){
             console.log('IO Ready');
