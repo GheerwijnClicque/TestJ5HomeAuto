@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
 router.get('/relay/:id', function(req, res) {
     var pin = req.params.id;
     toggle(pin);
-    res.sendStatus(200);
+    // res.sendStatus(200);
 });
 
 router.get('/test', function(req, res) {
@@ -84,7 +84,6 @@ var toggle = function(id) {
 };
 
 router.get('/devices', function(req, res) {
-
     db.serialize(function() {
         var data;
 		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
