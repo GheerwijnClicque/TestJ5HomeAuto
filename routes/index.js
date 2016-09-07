@@ -58,9 +58,9 @@ router.get('/', function(req, res, next) {
                 console.log('initialized');
                 // res.sendStatus(200);
             });
-            res.render('index', { title: 'Express'});
         });
     // }
+    res.render('index', { title: 'Express'});
 
 
 });
