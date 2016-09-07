@@ -99,84 +99,84 @@ router.get('/refresh', function(req, res) {
     }
 });
 
-router.get('/relay/:id', function(req, res) {
-    var pin = req.params.id;
-    toggle(pin);
-    // res.sendStatus(200);
-});
-
-router.get('/test', function(req, res) {
-    res.send('<h2>TESTING</h2>');
-    console.log('testing 1, 2');
-});
-
-var toggle = function(id) {
-    relays.forEach(function(item, index) {
-        if(item.pin == id) {
-            item.toggle();
-        }
-    });
-};
-
-router.get('/devices', function(req, res) {
-    db.serialize(function() {
-        var data;
-		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
-			data = row;
-            res.send(JSON.stringify(data));
-            console.log(data);
-		});
-	});
-
-});
-
-router.get('/locations', function(req, res) {
-    db.serialize(function() {
-        var data;
-		db.all("SELECT * from LOCATIONS", function(error, row) {
-			data = row;
-            res.send(JSON.stringify(data));
-            // console.log(data);
-		});
-	});
-});
-
-router.get('/components', function(req, res) {
-    db.serialize(function() {
-        var data;
-		db.all("SELECT * from COMPONENTS", function(error, row) {
-			data = row;
-            res.send(JSON.stringify(data));
-            // console.log(data);
-		});
-	});
-});
-
-router.post('/addDevice', function(req, res) {
-    console.log('new device: ');
-    console.log(req.body.component);
-    var name = req.body.name;
-    var location = req.body.location;
-    var pin = req.body.pin;
-    var component = req.body.component;
-
-    if(component == 'RELAY') {
-        relay = new five.Relay(pin);
-        console.log(relay);
-    }
-
-    db.serialize(function() {
-        db.run("INSERT INTO DEVICES (location_id, name, pin, component) VALUES ($location, $name, $pin, $component)", {$name: name, $location: location, $pin: pin, $component: component}, function() {
-            res.sendStatus(200);
-        });
-    });
-});
-
-router.post('/deleteDevice', function(req, res) {
-    db.run("DELETE FROM DEVICES WHERE deviceid = $id", {$id: req.body.id}, function(error, row) {
-        console.log(this.changes);
-        res.sendStatus(200);
-    });
-});
+// router.get('/relay/:id', function(req, res) {
+//     var pin = req.params.id;
+//     toggle(pin);
+//     // res.sendStatus(200);
+// });
+//
+// router.get('/test', function(req, res) {
+//     res.send('<h2>TESTING</h2>');
+//     console.log('testing 1, 2');
+// });
+//
+// var toggle = function(id) {
+//     relays.forEach(function(item, index) {
+//         if(item.pin == id) {
+//             item.toggle();
+//         }
+//     });
+// };
+//
+// router.get('/devices', function(req, res) {
+//     db.serialize(function() {
+//         var data;
+// 		db.all("SELECT * from DEVICES INNER JOIN LOCATIONS on location_id = id", function(error, row) {
+// 			data = row;
+//             res.send(JSON.stringify(data));
+//             console.log(data);
+// 		});
+// 	});
+//
+// });
+//
+// router.get('/locations', function(req, res) {
+//     db.serialize(function() {
+//         var data;
+// 		db.all("SELECT * from LOCATIONS", function(error, row) {
+// 			data = row;
+//             res.send(JSON.stringify(data));
+//             // console.log(data);
+// 		});
+// 	});
+// });
+//
+// router.get('/components', function(req, res) {
+//     db.serialize(function() {
+//         var data;
+// 		db.all("SELECT * from COMPONENTS", function(error, row) {
+// 			data = row;
+//             res.send(JSON.stringify(data));
+//             // console.log(data);
+// 		});
+// 	});
+// });
+//
+// router.post('/addDevice', function(req, res) {
+//     console.log('new device: ');
+//     console.log(req.body.component);
+//     var name = req.body.name;
+//     var location = req.body.location;
+//     var pin = req.body.pin;
+//     var component = req.body.component;
+//
+//     if(component == 'RELAY') {
+//         relay = new five.Relay(pin);
+//         console.log(relay);
+//     }
+//
+//     db.serialize(function() {
+//         db.run("INSERT INTO DEVICES (location_id, name, pin, component) VALUES ($location, $name, $pin, $component)", {$name: name, $location: location, $pin: pin, $component: component}, function() {
+//             res.sendStatus(200);
+//         });
+//     });
+// });
+//
+// router.post('/deleteDevice', function(req, res) {
+//     db.run("DELETE FROM DEVICES WHERE deviceid = $id", {$id: req.body.id}, function(error, row) {
+//         console.log(this.changes);
+//         res.sendStatus(200);
+//     });
+// });
 
 module.exports = router;
