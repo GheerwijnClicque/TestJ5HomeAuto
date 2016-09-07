@@ -29,8 +29,8 @@ var initialized = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
     // console.log('taking a looong time...');
-    if(!initialized) {
-        console.log('initializing...');
+    // if(!initialized) {
+    //     console.log('initializing...');
         io.once('ready', function(){
             console.log('IO Ready');
             io.isReady = true;
@@ -59,7 +59,7 @@ router.get('/', function(req, res, next) {
                 // res.sendStatus(200);
             });
         });
-    }
+    // }
 
     res.render('index', { title: 'Express'});
 });
